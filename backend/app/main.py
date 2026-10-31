@@ -159,7 +159,14 @@ async def broadcast(event: dict, recipients=None):
 
 @app.get("/health")
 def health(): return {"status": "ok"}
-
+@app.get("/")
+def root():
+    return {
+        "name": "ChatSphere API",
+        "status": "running",
+        "health": "/health",
+        "documentation": "/docs",
+    }
 @app.post("/api/auth/register", response_model=schemas.AuthOut)
 def register(data: schemas.RegisterIn, db: Session = Depends(get_db)):
     username = data.username.lower()
